@@ -1,0 +1,65 @@
+%%latex
+$$x(m,q,t)=\sum_{k=1}^{K}F_k(m,t)s_k(m,q,t)$$
+ 
+\begin{align}
+y_j(m,q,t)&=H_j(m,q,t)x(m,q,t)+n_j\\
+    &=H_j(m,q,t)\sum_{k=1}^{K}{F_k(m,t)s_k(m,q,t)+n_j}\\
+    &=H_j(m,q,t)F_j(m,t)s_j(m,q,t) + H_j(m,q,t)\sum_{k\neq j}{F_k(m,t)s_k(m,q,t)}+n_j\\
+    &=H^{eq}_j(m,q,t)s_j(m,q,t) + u_j\\
+\end{align}
+ 
+where, 
+\begin{align}
+H^{eq}_j(m,q,t)= H_j(m,q,t)F_j(m,t) \\
+Ruu_j=H_j(m,q,t)(\sum_{k\neq j}F_k(m,t)F_k(m,t)^H) H_j(m,q,t)^H+\sigma_j^2 I 
+\end{align}
+
+
+%%latex
+by using MMSE-IRC
+\begin{align}
+W_j(m,q,t)&=(H^{eq}_j(m,q,t)^H Ruu_j^{-1}H^{eq}_j(m,q,t)+I)^{-1}H^{eq}_j(m,q,t)^H Ruu_j^{-1}\\
+          &=QH^{eq}_j(m,q,t)^H Ruu_j^{-1}
+\end{align}
+\begin{align}
+\hat{s}_j(m,q,t)&=W_j(m,q,t)*y_j(m,q,t) \\
+                &=QH^{eq}_j(m,q,t)^H Ruu_j^{-1}(H^{eq}_j(m,q,t)s_j(m,q,t) + u_j)\\
+                &=QH^{eq}_j(m,q,t)^H Ruu_j^{-1}H^{eq}_j(m,q,t)s_j(m,q,t)+QH^{eq}_j(m,q,t)^H Ruu_j^{-1}u_j\\
+                &=(I-Q)s_j(m,q,t)+v_j
+\end{align}
+where the covariance matrix of $v_j$ is:
+\begin{align}
+Rvv_j&=QH^{eq}_j(m,q,t)^H Ruu_j^{-1}u_j * (QH^{eq}_j(m,q,t)^H Ruu_j^{-1}u_j)^H\\
+     &=QH^{eq}_j(m,q,t)^H Ruu_j^{-1} Ruu_j * Ruu_j^{-1}H^{eq}_j(m,q,t)Q^H\\
+     &=(I-Q)*Q^H
+\end{align}
+the covariance matrix of $\hat{s}_j$ is:
+\begin{align}
+\hat{R}ss_j = (I-Q)*(I-Q)^H+(I-Q)*(Q^H)= I-Q
+\end{align}   
+Therefore, the snir of layer i can be writen as:
+\begin{align}
+SINR_j(i,m,q,t)=\frac{(1-Q_{ii})^2}{1-Q_{ii}-(1-Q_{ii})^2}=\frac{1}{Q_{ii}}-1\\
+C_j(i,m,q,t)=log(\frac{1}{Q_{ii}})
+\end{align}
+
+
+%%latex
+\begin{align}
+\mathrm{max} &\sum_{j=1}^{K}{\alpha_jC_j(t)}\\
+\mathrm{s.t.}& \sum_{m,ilayer}|F_j(m,t)[iBS,ilayer]|^2 \leq 1/N_{RE}, \forall j,iBS\\
+&C_j(t)=f^{EESM}_{i,m,q}(C_j(i,m,q,t))\\
+&C_j(i,m,q,t)=log(\frac{1}{Q_j(m,q,t)_{ii}})\\      
+&Q_j(m,q,t)=(H^{eq}_j(m,q,t)^H Ruu_j^{-1}H^{eq}_j(m,q,t)+I)^{-1}\\
+&H^{eq}_j(m,q,t)= H_j(m,q,t)F_j(m,t) \\
+&Ruu_j=H_j(m,q,t)(\sum_{k\neq j}{F_k(m,t)F_k(m,t)^H}) H_j(m,q,t)^H+\sigma_j^2 I \\
+\end{align}
+
+$$
+f^{EESM}_{i,m,q}(C_j(i,m,q,t))=\left\{
+\begin{align}
+&\sum_{i,m,q}{C_j(i,m,q,t)} \quad ideal decoding\\
+&\min_{i,m,q}{C_j(i,m,q,t)} \quad actual decoding\\
+\end{align}
+\right. 
+$$
