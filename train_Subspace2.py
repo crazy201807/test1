@@ -105,8 +105,8 @@ for isamp in range(M1):
     x=Data[index]
     a=getA(x[ i+FeatureNum1-1:i-1:-1 ])
     a/=np.linalg.norm(a)
-    xa = np.linalg.norm(PA @ tmp.transpose())
-    xb = np.linalg.norm(PB @ tmp.transpose())
+    xa = np.linalg.norm(PA @ a)
+    xb = np.linalg.norm(PB @ a)
     predY[isamp,0]=xa
     predY[isamp,1]=xb
     if xa/xb>TH:
